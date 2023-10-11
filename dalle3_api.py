@@ -11,9 +11,15 @@ options = ChromeOptions()
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("--headless")
 driver = Chrome(options=options)
-cookie_value = "<your_cookie>"
+cookie_value = load_UBing(9)
 
-
+def load_UBing(index):
+    with open(os.path.join(os.getcwd(), "edgegptcookie.json"), "r", encoding="utf-8") as file:
+        data = json.load(file)
+        if isinstance(data, list) and index < len(data):
+            return data[index]['value']
+        return None
+        
 def get_time():
     return datetime.datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
 
