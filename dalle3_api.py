@@ -12,10 +12,9 @@ options = ChromeOptions()
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("--headless")
 driver = Chrome(options=options)
-#cookie_value = load_UBing(9)
 
 def load_UBing(index):
-    with open(os.path.join(os.getcwd(), "UBing.json"), "r", encoding="utf-8") as file:
+    with open(os.path.join(os.getcwd(), "binng.json"), "r", encoding="utf-8") as file:
         data = json.load(file)
         if isinstance(data, list) and index < len(data):
             return data[index]['value']
@@ -24,19 +23,15 @@ def load_UBing(index):
 def get_time():
     return datetime.datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
 
-def get_time_save():
-    return datetime.datetime.now().strftime("%d-%m-%Y %H-%M-%S")
-
 def download_images(urls, save_folder):
     try:
-        timestamp_folder = os.path.join(save_folder, get_time_save())
-        if not os.path.exists(timestamp_folder):
-            os.makedirs(timestamp_folder)
+        if not os.path.exists(save_folder):
+            os.makedirs(save_folder)
 
         for index, url in enumerate(urls):
             response = requests.get(url)
             response.raise_for_status()
-            filename = os.path.join(timestamp_folder, f"{save_folder} ({index + 1}).png")
+            filename = os.path.join(save_folder, f"({index + 1}).png")
             with open(filename, 'wb') as file:
                 file.write(response.content)
 
