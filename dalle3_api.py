@@ -24,6 +24,7 @@ def get_time():
     return datetime.datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
 
 def download_images(urls, save_folder):
+    print(urls)
     try:
         if not os.path.exists(save_folder):
             os.makedirs(save_folder)
@@ -48,10 +49,16 @@ def open_website(query):
     logging.info(f"{get_time()} Bing İmage Creator (Dalle-3) Opened")
 
     driver.add_cookie(cookie)
-    driver.refresh()
-    logging.info(f"{get_time()} Cookie values added ")
-
-    return True
+    driver.refresh()  
+    download_images(get_urls(), "Temp")
+    
+    page_source = driver.page_source
+    data = driver.page_source
+    print(data)
+    
+    logging.info(f"{get_time()} Cookie values added ")    
+    
+    #return True
 
 def get_urls():
     try:
@@ -59,7 +66,7 @@ def get_urls():
             EC.presence_of_all_elements_located((By.CLASS_NAME, "mimg")))]))
 
         urls = [url.split('?')[0] for url in urls]
-
+        print(urls)
         return urls
     except Exception as e:
         logging.critical(
