@@ -14,6 +14,6 @@ if __name__ == "__main__":
 
     open_website(query)
 
-    urls = get_urls()
+    #urls = get_urls()
 
-    download_images(urls, query)
+    #download_images(urls, query)
