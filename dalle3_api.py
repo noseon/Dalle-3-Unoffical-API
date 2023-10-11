@@ -6,27 +6,26 @@ import datetime
 import logging
 import requests
 import os
-
+import json
+                
 options = ChromeOptions()
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("--headless")
 driver = Chrome(options=options)
-cookie_value = load_UBing(9)
+#cookie_value = load_UBing(9)
 
 def load_UBing(index):
-    with open(os.path.join(os.getcwd(), "edgegptcookie.json"), "r", encoding="utf-8") as file:
+    with open(os.path.join(os.getcwd(), "_UBing.json"), "r", encoding="utf-8") as file:
         data = json.load(file)
         if isinstance(data, list) and index < len(data):
             return data[index]['value']
         return None
-        
+
 def get_time():
     return datetime.datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
 
-
 def get_time_save():
     return datetime.datetime.now().strftime("%d-%m-%Y %H-%M-%S")
-
 
 def download_images(urls, save_folder):
     try:
@@ -46,10 +45,9 @@ def download_images(urls, save_folder):
     except requests.exceptions.RequestException as e:
         logging.critical(f"Image download failed: {str(e)}")
 
-
 def open_website(query):
     cookie = {"name": "_U",
-              "value": cookie_value}
+              "value": load_UBing(9)}
 
     driver.get(f'https://www.bing.com/images/create?q={query}')
     logging.info(f"{get_time()} Bing İmage Creator (Dalle-3) Opened")
@@ -59,7 +57,6 @@ def open_website(query):
     logging.info(f"{get_time()} Cookie values added ")
 
     return True
-
 
 def get_urls():
     try:
