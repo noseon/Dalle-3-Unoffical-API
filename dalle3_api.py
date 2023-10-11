@@ -50,12 +50,13 @@ def open_website(query):
 
     driver.add_cookie(cookie)
     driver.refresh()  
-    download_images(get_urls(), "Temp")
-    
+      
     page_source = driver.page_source
     data = driver.page_source
     print(data)
     
+    download_images(get_urls(), "Temp")
+
     logging.info(f"{get_time()} Cookie values added ")    
     
     #return True
